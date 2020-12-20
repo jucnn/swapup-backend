@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const Object = require('./models/object.model')
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/swapup', {
     useNewUrlParser: true,
@@ -22,20 +24,24 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.post('/api/objects', (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'Objet créé !'
+    const object = new Object({
+        ...req.body
     });
+    object.save()
+    .then(() => res.status(201).json({message: 'object saved'}))
+    .catch(error => res.status(400).json({error}));
 });
 
+app.get('/api/objects/:id', (req, res, next) => {
+    Object.findOne({ _id: req.params.id })
+    .then(object => res.status(200).json(object))
+    .catch(error => res.status(404).json({error}));
+})
 
-app.use('/api/objects', (req, res, next) => {
-    const objects = [{
-        "id": 1,
-        "title": "Télévision 22 pouces",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Sed do eiusmod tempor incididunt ut labore ad minim veniam.",
-    }];
-    res.status(200).json(objects);
+app.get('/api/objects', (req, res, next) => {
+    Object.find()
+    .then(objects => res.status(200).json(objects))
+    .catch(error => res.status(400).json({error}));
 });
 
 module.exports = app;
