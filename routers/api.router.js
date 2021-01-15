@@ -22,13 +22,14 @@ const objectController = require("../controllers/object.controller")
 Routes definition
 */
 class ApiRouter {
-  constructor() {
+  constructor({ passport }) {
     this.router = express.Router();
+    this.passport = passport
   }
 
   routes() {
     
-    this.router.post("/objects", objectController.createObject);
+    this.router.post("/objects", this.passport.authenticate('jwt', { session: false }), objectController.createObject);
     this.router.get("/objects", objectController.getAllObjects);
     this.router.get("/objects/:_id", objectController.getOneObject);
     this.router.put("/objects/:_id", objectController.updateObject);

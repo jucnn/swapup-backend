@@ -71,50 +71,80 @@ exports.register = (req, res) => {
 };
 //TODO : use response service in login
 exports.login = (req, res) => {
-  Models.user
-    .findOne({ email: req.body.email })
-    .then((user) => {
-      if (!user) {
-        return sendBodyError(
-          "/auth/login",
-          "POST",
-          res,
-          "No user matching"
-        );
-      }
-      bcrypt
-        .compare(req.body.password, user.password)
-        .then((valid) => {
-          if (!valid) {
-            return sendBodyError("/auth/login", "POST", res, "Wrong password");
-          }
-          sendApiSuccessResponse(
-            "/auth/login",
-            "POST",
-            res,
-            "Request succeed : User found",
-            user
-          );
-        })
-        .catch((error) =>
-          sendApiErrorResponse(
-            "/auth/login",
-            "POST",
-            res,
-            "Request failed : No user",
-            err
-          )
-        );
-    })
-    .catch((error) =>
-      sendApiErrorResponse(
+   // Check body data
+   if (
+    typeof req.body === "undefined" ||
+    req.body === null ||
+    Object.keys(req.body).length === 0
+  ) {
+    return sendBodyError(
+      "/auth/login",
+      "POST",
+      res,
+      "No data provided in the reqest body"
+    );
+  } else {
+    // Check body data
+    const { ok, extra, miss } = checkFields(Mandatory.login, req.body);
+
+    // Error: bad fields provided
+    if (!ok) {
+      return sendFieldsError(
         "/auth/login",
         "POST",
         res,
-        "Request failed : No user",
-        err
-      )
-    );
+        "Bad fields provided",
+        miss,
+        extra
+      );
+    } else {
+      // Find user from email
+      Models.user.findOne({ email: req.body.email }, (err, data) => {
+        if (err || data === null) {
+          return sendApiErrorResponse(
+            "/auth/login",
+            "POST",
+            res,
+            "Email not found",
+            err
+          );
+        } else {
+          // Check user password
+          const validatedPassword = bcrypt.compareSync(
+            req.body.password,
+            data.password
+          );
+          if (!validatedPassword) {
+            return sendApiErrorResponse(
+              "/auth/login",
+              "POST",
+              res,
+              "Invalid password",
+              err
+            );
+          } else {
+            // Generate user JWT
+            const userJwt = data.generateJwt(data);
+
+            // Set response cookie
+            res.cookie(process.env.COOKIE_NAME, userJwt, {
+              maxAge: 700000,
+              httpOnly: true,
+            });
+
+            // Send user data
+            return sendApiSuccessResponse(
+              "/auth/login",
+              "POST",
+              res,
+              "User login",
+              data
+            );
+          }
+        }
+      });
+    }
+  }
 };
 
 exports.getAllUsers = (req, res) => {
