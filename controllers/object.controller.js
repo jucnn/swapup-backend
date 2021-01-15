@@ -1,64 +1,52 @@
 const Models = require("../models/index");
-const {
-  sendBodyError,
-  sendFieldsError,
-  sendApiSuccessResponse,
-  sendApiErrorResponse,
-} = require("../services/response.service");
 
-exports.createObject = (req, res) => {
-  return new Promise(async (resolve, reject) => {
+exports.createOne = (req, res) => {
+  return new Promise((resolve, reject) => {
+    // USe Models to create new post
     Models.object
       .create(req.body)
-      .then((data) =>
-        sendApiSuccessResponse(
-          "/objects",
-          "POST",
-          res,
-          "Request succeed : Object created",
-          data
-        )
-      )
-      .catch((err) =>
-        sendApiErrorResponse(
-          "/objects",
-          "POST",
-          res,
-          "Request failed : Object not created",
-          err
-        )
-      );
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
   });
 };
 
-exports.getAllObjects = (req, res) => {
+exports.getAll = (req, res) => {
   return new Promise((resolve, reject) => {
-    Models.object.find((err, data) => {
-      err ? reject(res.json(err)) : resolve(res.json(data));
-    });
+    Models.object
+      .find()
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
+  });
+    
+};
+
+exports.getOne = (req, res) => {
+  return new Promise((resolve, reject) => {
+    Models.object
+      .findById(req)
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
   });
 };
 
-exports.getOneObject = (req, res) => {
+exports.updateOne = (req, res) => {
+  console.log(req.params);
+
+  console.log(req.body);
   return new Promise((resolve, reject) => {
-    Models.object.findById(req.params._id, (err, data) => {
-      err ? reject(res.json(err)) : resolve(res.json(data));
-    });
+    Models.object
+      .updateOne({ _id: req.params.id }, req.body)
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
   });
 };
 
-exports.updateObject = (req, res) => {
+exports.deleteOne = (req, res) => {
+  console.log(req);
   return new Promise((resolve, reject) => {
-    Models.object.update({ _id: req.params._id }, req.body, (err, data) => {
-      err ? reject(res.json(err)) : resolve(res.json(data));
-    });
-  });
-};
-
-exports.deleteObject = (req, res) => {
-  return new Promise((resolve, reject) => {
-    Models.object.findByIdAndDelete(req.params._id, (err, data) => {
-      err ? reject(res.json(err)) : resolve(res.json(data));
-    });
+    Models.object
+      .findByIdAndDelete({ _id: req })
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
   });
 };
