@@ -143,7 +143,7 @@ class ApiRouter {
         );
     });
 
-    this.router.put(
+    this.router.patch(
       "/:endpoint/:id",
       this.passport.authenticate("jwt", { session: false }),
       (req, res) => {
@@ -155,17 +155,17 @@ class ApiRouter {
         ) {
           return sendBodyError(
             `/api/${req.params.endpoint}`,
-            "PUT",
+            "PATCH",
             res,
             "No data provided in the reqest body"
           );
         } else {
           // Check body data
-          const { ok, extra, miss } = checkFields(
+       /*    const { ok, extra, miss } = checkFields(
             Mandatory[req.params.endpoint],
             req.body
-          );
-
+          ); */
+/* 
           // Error: bad fields provided
           if (!ok) {
             return sendFieldsError(
@@ -176,16 +176,16 @@ class ApiRouter {
               miss,
               extra
             );
-          } else {
+          } else { */
             // Add author _id
-            req.body.seller_id = req.user._id;
+         /*    req.body.seller_id = req.user._id; */
             // Use the controller to create nex object
             Controllers[req.params.endpoint]
               .updateOne(req)
               .then((apiResponse) =>
                 sendApiSuccessResponse(
                   `/api/${req.params.endpoint}`,
-                  "POST",
+                  "PATCH",
                   res,
                   "Request succeed",
                   apiResponse
@@ -194,14 +194,14 @@ class ApiRouter {
               .catch((apiError) =>
                 sendApiErrorResponse(
                   `/api/${req.params.endpoint}`,
-                  "POST",
+                  "PATCH",
                   res,
                   "Request failed",
                   apiError
                 )
               );
-          }
-        }
+/*           }
+ */        }
       }
     );
 
