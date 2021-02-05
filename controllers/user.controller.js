@@ -71,8 +71,8 @@ exports.register = (req, res) => {
 };
 //TODO : use response service in login
 exports.login = (req, res) => {
-   // Check body data
-   if (
+  // Check body data
+  if (
     typeof req.body === "undefined" ||
     req.body === null ||
     Object.keys(req.body).length === 0
@@ -125,12 +125,12 @@ exports.login = (req, res) => {
           } else {
             // Generate user JWT
             const userJwt = data.generateJwt(data);
-
             // Set response cookie
             res.cookie(process.env.COOKIE_NAME, userJwt, {
               maxAge: 700000,
               httpOnly: true,
             });
+
 
             // Send user data
             return sendApiSuccessResponse(
@@ -145,6 +145,14 @@ exports.login = (req, res) => {
       });
     }
   }
+};
+
+exports.getInfoUser = (req, res) => {
+  return new Promise((resolve, reject) => {
+    Models.user.findById(req.user._id, (err, data) => {
+      err ? reject(res.json(err)) : resolve(res.json(data));
+    });
+  });
 };
 
 exports.getAllUsers = (req, res) => {

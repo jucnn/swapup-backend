@@ -15,7 +15,7 @@ const ObjectSchema = mongoose.Schema({
     },
     brand: {
         type: String,
-        required: true
+        required: false
     },
     price: {
         type: Number,
@@ -23,6 +23,10 @@ const ObjectSchema = mongoose.Schema({
     },
     donationPercentage: {
         type: Number,
+        required: true
+    },
+    association: {
+        type: String,
         required: true
     },
     seller_id: {

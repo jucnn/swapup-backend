@@ -11,7 +11,7 @@ const {
 /*
 Definition
 */
-const BookmarkSchema = new Schema({
+const FavoriteSchema = new Schema({
     id: String,
     user_id: String,
     object_id: String,
@@ -21,6 +21,6 @@ const BookmarkSchema = new Schema({
 /*
 Export
 */
-module.exports = mongoose.model("bookmark", BookmarkSchema);
+module.exports = mongoose.model("favorite", FavoriteSchema);
 
 //

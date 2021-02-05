@@ -14,9 +14,18 @@ const MySchema = new Schema({
   "@context": { type: String, default: "http://schema.org" },
   "@type": { type: String, default: "Person" },
 
-  givenName: String,
-  familyName: String,
-  password: String,
+  givenName: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  telephone: Number,
+  description: String,
+  address: String,
+  wantedObject: Array,
 
   // Définir une valeur de propriété unique
   email: { unique: true, type: String },
@@ -26,7 +35,6 @@ const MySchema = new Schema({
   banished: { type: Boolean, default: false },
 });
 //
-
 
 /* 
 Methods
@@ -48,8 +56,7 @@ MySchema.methods.generateJwt = (user) => {
     exp: parseInt(expiryToken.getTime() / 100, 10),
   };
 
-
-  return jwt.sign(jwtObject, process.env.JWT_SECRET)
+  return jwt.sign(jwtObject, process.env.JWT_SECRET);
 };
 //
 

@@ -4,7 +4,7 @@ Definition
 const Models = {
     object: require('./object.model'),
     user: require('./user.model'),
-    bookmark: require('./bookmark.model')
+    favorite: require('./favorite.model')
 
 }
 //
