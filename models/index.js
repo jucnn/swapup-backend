@@ -2,11 +2,11 @@
 Definition
 */
 const Models = {
-    object: require('./object.model'),
-    user: require('./user.model'),
-    favorite: require('./favorite.model')
-
-}
+  user: require("./user.model"),
+  identity: require("./identity.model"),
+  object: require("./object.model"),
+  favorite: require("./favorite.model"),
+};
 //
 
 /* 

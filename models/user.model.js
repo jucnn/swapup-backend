@@ -14,21 +14,13 @@ const MySchema = new Schema({
   "@context": { type: String, default: "http://schema.org" },
   "@type": { type: String, default: "Person" },
 
-  givenName: {
-    type: String,
-    required: true,
-  },
+  // Définir une valeur de propriété unique
+  email: { unique: true, type: String },
+
   password: {
     type: String,
     required: true,
   },
-  telephone: Number,
-  description: String,
-  address: String,
-  wantedObject: Array,
-
-  // Définir une valeur de propriété unique
-  email: { unique: true, type: String },
 
   // Définir une valeur par défaut
   creationDate: { type: Date, default: new Date() },
