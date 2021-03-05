@@ -125,7 +125,7 @@ class ApiRouter {
         .getOne(req.params.id)
         .then((apiResponse) =>
           sendApiSuccessResponse(
-            `/api/${req.params.endpoint}`,
+            `/api/${req.params.endpoint}/${req.params.id}`,
             "GET",
             res,
             "Request succeed",
@@ -161,11 +161,11 @@ class ApiRouter {
           );
         } else {
           // Check body data
-       /*    const { ok, extra, miss } = checkFields(
+          /*    const { ok, extra, miss } = checkFields(
             Mandatory[req.params.endpoint],
             req.body
           ); */
-/* 
+          /* 
           // Error: bad fields provided
           if (!ok) {
             return sendFieldsError(
@@ -177,60 +177,58 @@ class ApiRouter {
               extra
             );
           } else { */
-            // Add author _id
-         /*    req.body.seller_id = req.user._id; */
-            // Use the controller to create nex object
-            Controllers[req.params.endpoint]
-              .updateOne(req)
-              .then((apiResponse) =>
-                sendApiSuccessResponse(
-                  `/api/${req.params.endpoint}`,
-                  "PATCH",
-                  res,
-                  "Request succeed",
-                  apiResponse
-                )
+          // Add author _id
+          /*    req.body.seller_id = req.user._id; */
+          // Use the controller to create nex object
+          Controllers[req.params.endpoint]
+            .updateOne(req)
+            .then((apiResponse) =>
+              sendApiSuccessResponse(
+                `/api/${req.params.endpoint}`,
+                "PATCH",
+                res,
+                "Request succeed",
+                apiResponse
               )
-              .catch((apiError) =>
-                sendApiErrorResponse(
-                  `/api/${req.params.endpoint}`,
-                  "PATCH",
-                  res,
-                  "Request failed",
-                  apiError
-                )
-              );
-/*           }
- */        }
+            )
+            .catch((apiError) =>
+              sendApiErrorResponse(
+                `/api/${req.params.endpoint}`,
+                "PATCH",
+                res,
+                "Request failed",
+                apiError
+              )
+            );
+          /*           }
+           */
+        }
       }
     );
 
-    this.router.delete(
-      "/:endpoint/:id",
-      (req, res) => {
-        // Use the controller to create nex object
-        Controllers[req.params.endpoint]
-          .deleteOne(req.params.id)
-          .then((apiResponse) =>
-            sendApiSuccessResponse(
-              `/api/${req.params.endpoint}`,
-              "DELETE",
-              res,
-              "Request succeed",
-              apiResponse
-            )
+    this.router.delete("/:endpoint/:id", (req, res) => {
+      // Use the controller to create nex object
+      Controllers[req.params.endpoint]
+        .deleteOne(req.params.id)
+        .then((apiResponse) =>
+          sendApiSuccessResponse(
+            `/api/${req.params.endpoint}`,
+            "DELETE",
+            res,
+            "Request succeed",
+            apiResponse
           )
-          .catch((apiError) =>
-            sendApiErrorResponse(
-              `/api/${req.params.endpoint}`,
-              "DELETE",
-              res,
-              "Request failed",
-              apiError
-            )
-          );
-      }
-    );
+        )
+        .catch((apiError) =>
+          sendApiErrorResponse(
+            `/api/${req.params.endpoint}`,
+            "DELETE",
+            res,
+            "Request failed",
+            apiError
+          )
+        );
+    });
     /*  this.router.post("/objects", this.passport.authenticate('jwt', { session: false }), objectController.createObject); */
     /* this.router.get("/objects", objectController.getAllObjects); */
     /*  this.router.get("/objects/:_id", objectController.getOneObject); */

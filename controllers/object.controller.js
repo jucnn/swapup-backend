@@ -17,15 +17,15 @@ exports.getAll = (req, res) => {
       .then((data) => resolve(data))
       .catch((err) => reject(err));
   });
-    
+  
 };
 
 exports.getOne = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
-      .findById(req)
-      .then((data) => resolve(data))
-      .catch((err) => reject(err));
+    .findById(req)
+    .then((data) => resolve(data))
+    .catch((err) => reject(err));
   });
 };
 

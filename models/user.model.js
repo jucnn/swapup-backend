@@ -21,6 +21,16 @@ const MySchema = new Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  telephone: Number,
+  address: String,
 
   // Définir une valeur par défaut
   creationDate: { type: Date, default: new Date() },

@@ -128,7 +128,7 @@ exports.login = (req, res) => {
             // Set response cookie
             res.cookie(process.env.COOKIE_NAME, userJwt, {
               maxAge: 700000,
-              httpOnly: true,
+              httpOnly: false,
             });
 
 

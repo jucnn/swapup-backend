@@ -1,9 +1,9 @@
 //
 
 const Mandatory = {
-  user: ["givenName", "password", "telephone", "description", "address", "email"],
+  user: ["username", "password", "telephone", "description", "address", "email"],
   login: ["password", "email"],
-  object: ["title", "description", "state", "brand", "price", "donationPercentage"]
+  object: ["title", "description", "state", "brand", "price", "donationPercentage", "association"]
 };
 
 module.exports = Mandatory;
