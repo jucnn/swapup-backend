@@ -13,7 +13,7 @@ exports.createOne = (req, res) => {
 exports.getAll = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
-      .find()
+      .find(req.query)
       .then((data) => resolve(data))
       .catch((err) => reject(err));
   });
@@ -30,9 +30,6 @@ exports.getOne = (req, res) => {
 };
 
 exports.updateOne = (req, res) => {
-  console.log(req.params);
-
-  console.log(req.body);
   return new Promise((resolve, reject) => {
     Models.object
       .updateOne({ _id: req.params.id }, req.body)
@@ -42,7 +39,6 @@ exports.updateOne = (req, res) => {
 };
 
 exports.deleteOne = (req, res) => {
-  console.log(req);
   return new Promise((resolve, reject) => {
     Models.object
       .findByIdAndDelete({ _id: req })
