@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const ObjectSchema = mongoose.Schema({
   title: {
@@ -33,9 +34,9 @@ const ObjectSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  seller_id: {
-    type: String,
-    required: true,
+  seller: {
+    type: Schema.Types.ObjectId,
+    ref: 'user'  
   },
 });
 

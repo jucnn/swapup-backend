@@ -14,18 +14,31 @@ exports.getAll = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
       .find(req.query)
-      .then((data) => resolve(data))
-      .catch((err) => reject(err));
+      .populate("seller", ["-password"])
+      .exec((err, data) => {
+        console.log(data);
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(data);
+        }
+      });
   });
-  
 };
 
 exports.getOne = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
-    .findById(req)
-    .then((data) => resolve(data))
-    .catch((err) => reject(err));
+      .findById(req)
+      .populate("seller", ["-password"])
+      .exec((err, data) => {
+        console.log(data);
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(data);
+        }
+      });
   });
 };
 

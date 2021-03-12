@@ -6,6 +6,7 @@ const Models = {
   identity: require("./identity.model"),
   object: require("./object.model"),
   favorite: require("./favorite.model"),
+  swap: require("./swap.model")
 };
 //
 

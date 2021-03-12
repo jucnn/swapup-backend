@@ -2,7 +2,8 @@
 Definition
 */
 const Controllers = {
-    object: require('./object.controller')
+    object: require('./object.controller'),
+    swap: require('./swap.controller')
 }
 //
 

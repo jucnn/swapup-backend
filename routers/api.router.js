@@ -68,7 +68,7 @@ class ApiRouter {
             );
           } else {
             // Add author _id
-            req.body.seller_id = req.user._id;
+            req.body.seller = req.user._id;
 
             // Use the controller to create nex object
             Controllers[req.params.endpoint]
