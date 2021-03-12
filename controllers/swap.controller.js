@@ -14,8 +14,19 @@ exports.getAll = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.swap
       .find(req.query)
-      .then((data) => resolve(data))
-      .catch((err) => reject(err));
+      .populate("objectWanted")
+      .populate("objectToExchange")
+      .populate("swap_sender", ["-password"])
+      .populate("swap_receiver", ["-password"])
+    /*   .then((data) => resolve(data)) */
+      .exec((err, data) => {
+        console.log(data);
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(data);
+        }
+      });
   });
 };
 
