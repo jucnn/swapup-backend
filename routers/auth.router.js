@@ -33,7 +33,7 @@ class AuthRouter {
     this.router.get("/", userController.getAllUsers);
     this.router.get("/me", passport.authenticate('jwt', { session: false }), userController.getInfoUser);
     this.router.get("/:_id", userController.getOneUser);
-    this.router.put("/:_id", userController.updateUser);
+    this.router.patch("/:_id", userController.updateUser);
     this.router.delete("/:_id", userController.deleteUser);
   }
 

@@ -24,13 +24,20 @@ const MySchema = new Schema({
   username: {
     type: String,
     required: true,
+    unique: true
   },
   description: {
     type: String,
-    required: true,
+    required: false,
   },
-  telephone: Number,
-  address: String,
+  telephone: {
+    type: String,
+    required: false,
+  },
+  address: {
+    type: String,
+    required: false,
+  },
 
   // Définir une valeur par défaut
   creationDate: { type: Date, default: new Date() },

@@ -12,7 +12,7 @@ const ObjectSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true
+    required: false
   },
   category: {
     type: String,
@@ -25,6 +25,7 @@ const ObjectSchema = mongoose.Schema({
   brand: {
     type: String,
     required: false,
+    default: 'Pas de marque'
   },
   price: {
     type: Number,
@@ -35,7 +36,7 @@ const ObjectSchema = mongoose.Schema({
     required: true,
   },
   association: {
-    type: String,
+    type: Object,
     required: true,
   },
   seller: {
