@@ -30,9 +30,6 @@ exports.getOne = (req, res) => {
 };
 
 exports.updateOne = (req, res) => {
-  console.log(req.params);
-
-  console.log(req.body);
   return new Promise((resolve, reject) => {
     Models.favorite
       .updateOne({ _id: req.params.id }, req.body)
@@ -42,7 +39,6 @@ exports.updateOne = (req, res) => {
 };
 
 exports.deleteOne = (req, res) => {
-  console.log(req);
   return new Promise((resolve, reject) => {
     Models.favorite
       .findByIdAndDelete({ _id: req })

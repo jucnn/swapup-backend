@@ -16,7 +16,6 @@ exports.getAll = (req, res) => {
       .find(req.query)
       .populate("seller", ["-password"])
       .exec((err, data) => {
-        console.log(data);
         if (err) {
           return reject(err);
         } else {
@@ -32,7 +31,6 @@ exports.getOne = (req, res) => {
       .findById(req)
       .populate("seller", ["-password"])
       .exec((err, data) => {
-        console.log(data);
         if (err) {
           return reject(err);
         } else {

@@ -20,7 +20,6 @@ exports.getAll = (req, res) => {
       .populate("swap_receiver", ["-password"])
     /*   .then((data) => resolve(data)) */
       .exec((err, data) => {
-        console.log(data);
         if (err) {
           return reject(err);
         } else {
@@ -40,7 +39,6 @@ exports.getOne = id => {
       .populate("swap_receiver", ["-password"])
     /*   .then((data) => resolve(data)) */
       .exec((err, data) => {
-        console.log(data);
         if (err) {
           return reject(err);
         } else {
