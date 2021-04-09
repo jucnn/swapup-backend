@@ -15,11 +15,11 @@ const ObjectSchema = mongoose.Schema({
     required: false
   },
   category: {
-    type: String,
+    type: Object,
     required: true,
   },
   state: {
-    type: String,
+    type: Object,
     required: true,
   },
   brand: {
@@ -28,10 +28,6 @@ const ObjectSchema = mongoose.Schema({
     default: 'Pas de marque'
   },
   price: {
-    type: Number,
-    required: true,
-  },
-  donationPercentage: {
     type: Number,
     required: true,
   },

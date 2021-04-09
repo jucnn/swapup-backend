@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const StateSchema = mongoose.Schema({
-  name: {
+  label: {
     type: String,
     required: true,
   },
-  description: {
+  slug: {
     type: String,
     required: true,
   },

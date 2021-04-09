@@ -96,6 +96,30 @@ class ApiRouter {
       }
     );
 
+    this.router.post("/object/search", (req, res) => {
+      // Use the controller to create nex object
+      Controllers['object']
+        .getAllBySearching(req)
+        .then((apiResponse) =>
+          sendApiSuccessResponse(
+            `/api/object`,
+            "POST",
+            res,
+            "Request succeed",
+            apiResponse
+          )
+        )
+        .catch((apiError) =>
+          sendApiErrorResponse(
+            `/api/${req.params.endpoint}`,
+            "POST",
+            res,
+            "Request failed",
+            apiError
+          )
+        );
+    });
+
     this.router.get("/:endpoint", (req, res) => {
       // Use the controller to create nex object
       Controllers[req.params.endpoint]
