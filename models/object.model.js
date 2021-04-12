@@ -12,32 +12,32 @@ const ObjectSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: false
+    required: false,
   },
   category: {
-    type: Object,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "category",
   },
   state: {
-    type: Object,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "state",
   },
   brand: {
     type: String,
     required: false,
-    default: 'Pas de marque'
+    default: "Pas de marque",
   },
   price: {
-    type: Number,
+    type: String,
     required: true,
   },
   association: {
-    type: Object,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "association",
   },
   seller: {
     type: Schema.Types.ObjectId,
-    ref: 'user'  
+    ref: "user",
   },
 });
 

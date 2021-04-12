@@ -15,6 +15,9 @@ exports.getAll = (req, res) => {
     Models.object
       .find()
       .populate("seller", ["-password"])
+      .populate("category")
+      .populate("state")
+      .populate("association")
       .exec((err, data) => {
         if (err) {
           return reject(err);
@@ -56,6 +59,9 @@ exports.getOne = (req, res) => {
     Models.object
       .findById(req)
       .populate("seller", ["-password"])
+      .populate("category")
+      .populate("state")
+      .populate("association")
       .exec((err, data) => {
         if (err) {
           return reject(err);
