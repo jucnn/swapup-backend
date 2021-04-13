@@ -131,7 +131,6 @@ exports.login = (req, res) => {
               httpOnly: false,
             });
 
-
             // Send user data
             return sendApiSuccessResponse(
               "/auth/login",
@@ -145,6 +144,19 @@ exports.login = (req, res) => {
       });
     }
   }
+};
+
+exports.logout = async (req, res) => {
+  await req.logout();
+  req.session = null;
+  await res.clearCookie(process.env.COOKIE_NAME);
+  return sendApiSuccessResponse(
+    "/auth/login",
+    "POST",
+    res,
+    "User logout",
+    null
+  );
 };
 
 exports.getInfoUser = (req, res) => {

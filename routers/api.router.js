@@ -98,7 +98,8 @@ class ApiRouter {
 
     this.router.post("/object/search", (req, res) => {
       // Use the controller to create nex object
-      Controllers['object']
+      console.log("go there");
+      Controllers["object"]
         .getAllBySearching(req)
         .then((apiResponse) =>
           sendApiSuccessResponse(
@@ -109,15 +110,17 @@ class ApiRouter {
             apiResponse
           )
         )
-        .catch((apiError) =>
+        .catch((apiError) => {
+          console.log(apiError);
+
           sendApiErrorResponse(
             `/api/${req.params.endpoint}`,
             "POST",
             res,
             "Request failed",
             apiError
-          )
-        );
+          );
+        });
     });
 
     this.router.get("/:endpoint", (req, res) => {

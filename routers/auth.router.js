@@ -29,7 +29,8 @@ class AuthRouter {
   routes() {
 
     this.router.post("/register", userController.register);
-    this.router.post("/login", userController.login)
+    this.router.post("/login", userController.login);
+    this.router.get("/logout", userController.logout);
     this.router.get("/", userController.getAllUsers);
     this.router.get("/me", passport.authenticate('jwt', { session: false }), userController.getInfoUser);
     this.router.get("/:_id", userController.getOneUser);

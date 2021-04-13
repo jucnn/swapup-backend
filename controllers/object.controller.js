@@ -29,7 +29,6 @@ exports.getAll = (req, res) => {
 };
 
 exports.getAllBySearching = (req, res) => {
-  console.log(req.body);
   let { title, description, category, price, state, brand } = req.body;
   queryCond = {
     ...(category && { category }),
@@ -44,6 +43,9 @@ exports.getAllBySearching = (req, res) => {
     Models.object
       .find(queryCond)
       .populate("seller", ["-password"])
+      .populate("category")
+      .populate("state")
+      .populate("association")
       .exec((err, data) => {
         if (err) {
           return reject(err);
