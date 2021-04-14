@@ -69,6 +69,7 @@ class ApiRouter {
           } else {
             // Add author _id
             req.body.seller = req.user._id;
+           /*  req.body.swap_sender = req.user._id; */
 
             // Use the controller to create nex object
             Controllers[req.params.endpoint]
@@ -124,6 +125,7 @@ class ApiRouter {
     });
 
     this.router.get("/:endpoint", (req, res) => {
+      console.log(req.user);
       // Use the controller to create nex object
       Controllers[req.params.endpoint]
         .getAll(req)

@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 /*
 Definition
 */
-const MySchema = new Schema({
+const UserSchema = new Schema({
   // Schema.org
   "@context": { type: String, default: "http://schema.org" },
   "@type": { type: String, default: "Person" },
@@ -24,7 +24,7 @@ const MySchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   description: {
     type: String,
@@ -38,7 +38,9 @@ const MySchema = new Schema({
     type: String,
     required: false,
   },
-
+/*   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "object" }],
+  swapSended: [{ type: mongoose.Schema.Types.ObjectId, ref: "swap" }],
+  swapReceived: [{ type: mongoose.Schema.Types.ObjectId, ref: "swap" }], */
   // Définir une valeur par défaut
   creationDate: { type: Date, default: new Date() },
   banished: { type: Boolean, default: false },
@@ -48,7 +50,7 @@ const MySchema = new Schema({
 /* 
 Methods
 */
-MySchema.methods.generateJwt = (user) => {
+UserSchema.methods.generateJwt = (user) => {
   // Set expiration
   const expiryToken = new Date();
   expiryToken.setDate(expiryToken.getDate() + 59);
@@ -67,10 +69,26 @@ MySchema.methods.generateJwt = (user) => {
 
   return jwt.sign(jwtObject, process.env.JWT_SECRET);
 };
+
+UserSchema.methods.favorite = function (id) {
+  if (this.favorites.indexOf(id) === -1) {
+    this.favorites.push(id);
+  }
+  return this.save();
+};
+UserSchema.methods.unfavorite = function (id) {
+  this.favorites.remove(id);
+  return this.save();
+};
+UserSchema.methods.isFavorite = function (id) {
+  return this.favorites.some(function (favoriteId) {
+    return id.toString() === favoriteId.toString();
+  });
+};
 //
 
 /* 
 Export
 */
-module.exports = mongoose.model("user", MySchema);
+module.exports = mongoose.model("user", UserSchema);
 //

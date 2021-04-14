@@ -33,6 +33,9 @@ class AuthRouter {
     this.router.get("/logout", userController.logout);
     this.router.get("/", userController.getAllUsers);
     this.router.get("/me", passport.authenticate('jwt', { session: false }), userController.getInfoUser);
+/*     this.router.get("/favorites", passport.authenticate('jwt', { session: false }), userController.getUserFavorites); */
+    this.router.get("/swapreceived", passport.authenticate('jwt', { session: false }), userController.getUserSwapReceived);
+    this.router.get("/swapsent", passport.authenticate('jwt', { session: false }), userController.getUserSwapSent);
     this.router.get("/:_id", userController.getOneUser);
     this.router.patch("/:_id", userController.updateUser);
     this.router.delete("/:_id", userController.deleteUser);

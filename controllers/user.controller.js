@@ -167,6 +167,42 @@ exports.getInfoUser = (req, res) => {
   });
 };
 
+exports.getUserSwapSent = (req, res) => {
+  return new Promise((resolve, reject) => {
+    Models.swap
+      .find({ swap_sender: req.user._id })
+      .populate("objectWanted")
+      .populate("objectToExchange")
+      .populate("swap_receiver", ["-password"])
+      .populate("swap_state")
+      .exec((err, data) => {
+        if (err) {
+          return reject(res.json(err));
+        } else {
+          return resolve(res.json(data));
+        }
+      });
+  });
+};
+
+exports.getUserSwapReceived = (req, res) => {
+  return new Promise((resolve, reject) => {
+    Models.swap
+      .find({ swap_receiver: req.user._id })
+      .populate("objectWanted")
+      .populate("objectToExchange")
+      .populate("swap_sender", ["-password"])
+      .populate("swap_state")
+      .exec((err, data) => {
+        if (err) {
+          return reject(res.json(err));
+        } else {
+          return resolve(res.json(data));
+        }
+      });
+  });
+};
+
 exports.getAllUsers = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.user.find((err, data) => {

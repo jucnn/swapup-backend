@@ -11,6 +11,7 @@ const Models = {
   brand: require("./brand.model"),
   category: require("./category.model"),
   state: require("./state.model"),
+  swapstate: require("./swapstate.model"),
 
 };
 //

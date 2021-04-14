@@ -9,13 +9,13 @@ const { Schema } = mongoose;
 Definition
 */
 const SwapSchema = new Schema({
-  objectWanted:  {
+  objectWanted: {
     type: Schema.Types.ObjectId,
-    ref: 'object'  
+    ref: "object",
   },
-  objectToExchange:  {
+  objectToExchange: {
     type: Schema.Types.ObjectId,
-    ref: 'object'  
+    ref: "object",
   },
   swap_sender: {
     type: Schema.Types.ObjectId,
@@ -24,6 +24,10 @@ const SwapSchema = new Schema({
   swap_receiver: {
     type: Schema.Types.ObjectId,
     ref: "user",
+  },
+  swap_state: {
+    type: Schema.Types.ObjectId,
+    ref: "swapstate",
   },
 });
 //

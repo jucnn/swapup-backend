@@ -18,7 +18,7 @@ exports.getAll = (req, res) => {
       .populate("objectToExchange")
       .populate("swap_sender", ["-password"])
       .populate("swap_receiver", ["-password"])
-    /*   .then((data) => resolve(data)) */
+      .populate("swap_state")
       .exec((err, data) => {
         if (err) {
           return reject(err);

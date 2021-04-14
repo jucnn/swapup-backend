@@ -8,6 +8,7 @@ const Controllers = {
   brand: require("./brand.controller"),
   category: require("./category.controller"),
   state: require("./state.controller"),
+  swapstate: require("./swapstate.controller"),
 };
 //
 
