@@ -203,6 +203,20 @@ exports.getUserSwapReceived = (req, res) => {
   });
 };
 
+exports.getUserObjects = (req, res) => {
+  return new Promise((resolve, reject) => {
+    Models.object
+      .find({ seller: req.user._id })
+      .exec((err, data) => {
+        if (err) {
+          return reject(res.json(err));
+        } else {
+          return resolve(res.json(data));
+        }
+      });
+  });
+}
+
 exports.getAllUsers = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.user.find((err, data) => {
