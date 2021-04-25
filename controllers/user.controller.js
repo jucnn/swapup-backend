@@ -207,6 +207,10 @@ exports.getUserObjects = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
       .find({ seller: req.user._id })
+      .populate("seller", ["-password"])
+      .populate("category")
+      .populate("state")
+      .populate("association")
       .exec((err, data) => {
         if (err) {
           return reject(res.json(err));

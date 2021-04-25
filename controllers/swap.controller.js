@@ -3,10 +3,25 @@ const Models = require("../models/index");
 exports.createOne = (req, res) => {
   return new Promise((resolve, reject) => {
     // USe Models to create new post
-    Models.swap
-      .create(req.body)
-      .then((data) => resolve(data))
-      .catch((err) => reject(err));
+    Models.swapstate
+      .find({ slug: "pending" })
+      .then((data) => {
+        const payload = {
+          objectWanted: req.body.objectWanted,
+          objectToExchange: req.body.objectToExchange,
+          swap_sender: req.body.swap_sender,
+          swap_receiver: req.body.swap_receiver,
+          swap_state: data[0]._id,
+        };
+        Models.swap
+        .create(payload)
+        .then((data) => resolve(data))
+        .catch((err) => reject(err));
+      })
+      .catch((err) => {
+        reject(err);
+      });
+   
   });
 };
 
@@ -29,7 +44,7 @@ exports.getAll = (req, res) => {
   });
 };
 
-exports.getOne = id => {
+exports.getOne = (id) => {
   return new Promise((resolve, reject) => {
     Models.swap
       .findById(id)
@@ -37,7 +52,7 @@ exports.getOne = id => {
       .populate("objectToExchange")
       .populate("swap_sender", ["-password"])
       .populate("swap_receiver", ["-password"])
-    /*   .then((data) => resolve(data)) */
+      /*   .then((data) => resolve(data)) */
       .exec((err, data) => {
         if (err) {
           return reject(err);
