@@ -15,6 +15,7 @@ const ObjectSchema = mongoose.Schema({
   image: {
     type: String,
     required: false,
+    default: "https://i.stack.imgur.com/y9DpT.jpg"
   },
   category: {
     type: Schema.Types.ObjectId,
