@@ -56,6 +56,24 @@ exports.getAllBySearching = (req, res) => {
   });
 };
 
+exports.getAllByUser = (req, res) => {
+  return new Promise((resolve, reject) => {
+    Models.object
+      .find({ seller: req.params._id })
+      .populate("seller", ["-password"])
+      .populate("category")
+      .populate("state")
+      .populate("association")
+      .exec((err, data) => {
+        if (err) {
+          return reject(res.json(err));
+        } else {
+          return resolve(res.json(data));
+        }
+      });
+  });
+};
+
 exports.getOne = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
