@@ -5,7 +5,13 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "compile": "ncc build server.js -o dist",
+    "terser": "terser .\\dist/index.js --compress --mangle --output .\\dist/server.js",
+    "copy-env": "xcopy .env.prod .\\dist\\.env",
+    "delete-dist-file": "del .\\dist\\code-points.mem && del .\\dist\\index.js",
+    "push": "scp -r .\\dist/ juliette@134.209.84.253:/home/juliette/swapup/api",
+    "deploy": "npm run compile && npm run terser && npm run copy-env && npm run delete-dist-file && npm run push"
   },
   "repository": {
     "type": "git",
@@ -29,7 +35,8 @@
     "nodemon": "^2.0.7",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "terser": "^5.7.0"
   },
   "mdSeed": {
     "seedersFolder": "./seeders"

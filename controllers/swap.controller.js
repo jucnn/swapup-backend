@@ -14,14 +14,13 @@ exports.createOne = (req, res) => {
           swap_state: data[0]._id,
         };
         Models.swap
-        .create(payload)
-        .then((data) => resolve(data))
-        .catch((err) => reject(err));
+          .create(payload)
+          .then((data) => resolve(data))
+          .catch((err) => reject(err));
       })
       .catch((err) => {
         reject(err);
       });
-   
   });
 };
 
@@ -48,10 +47,11 @@ exports.getOne = (id) => {
   return new Promise((resolve, reject) => {
     Models.swap
       .findById(id)
-      .populate("objectWanted")
-      .populate("objectToExchange")
+      .populate({ path: "objectWanted", populate: { path: "state" } })
+      .populate({ path: "objectToExchange", populate: { path: "state" } })
       .populate("swap_sender", ["-password"])
       .populate("swap_receiver", ["-password"])
+      .populate("swap_state")
       /*   .then((data) => resolve(data)) */
       .exec((err, data) => {
         if (err) {

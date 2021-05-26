@@ -28,7 +28,7 @@ class ServerClass{
         // Set CORS middleware
         this.server.use( (req, res, next) => {
             // Allow actions for specific origins
-            res.header('Access-Control-Allow-Origin', ['http://localhost:8080']);
+            res.header('Access-Control-Allow-Origin', [process.env.ALLOWED_ORIGINS]);
             res.header('Access-Control-Allow-Credentials', 'true');
             res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST', 'DELETE', 'PATCH']);
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

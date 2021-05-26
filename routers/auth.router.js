@@ -8,6 +8,7 @@ const passport = require('passport');
 
 //Controllers
 const userController = require("../controllers/user.controller")
+const objectController = require("../controllers/object.controller")
 
 /* //Import Models
 const Models = require("../models/index");
@@ -40,6 +41,7 @@ class AuthRouter {
     this.router.get("/:_id", userController.getOneUser);
     this.router.patch("/:_id", userController.updateUser);
     this.router.delete("/:_id", userController.deleteUser);
+    this.router.get("/:_id/objects", objectController.getAllByUser);
   }
 
   init() {

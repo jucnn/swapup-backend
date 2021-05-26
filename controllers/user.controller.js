@@ -42,8 +42,6 @@ exports.register = (req, res) => {
         // Encrypt user pwd
         req.body.password = await bcrypt.hash(req.body.password, 10);
 
-        //TODO : encrypt RGPD data => cryptojs
-
         // Register user
         Models.user
           .create(req.body)
@@ -76,7 +74,6 @@ exports.register = (req, res) => {
     }
   });
 };
-//TODO : use response service in login
 exports.login = (req, res) => {
   // Check body data
   if (
@@ -91,7 +88,6 @@ exports.login = (req, res) => {
       "No data provided in the reqest body"
     );
   } else {
-    // Check body data
     const { ok, extra, miss } = checkFields(Mandatory.login, req.body);
 
     // Error: bad fields provided
@@ -178,8 +174,12 @@ exports.getUserSwapSent = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.swap
       .find({ swap_sender: req.user._id })
-      .populate("objectWanted")
-      .populate("objectToExchange")
+      .populate({ path: "objectWanted", populate: { path: "state" } })
+      .populate({ path: "objectWanted", populate: { path: "association" } })
+      .populate({ path: "objectWanted", populate: { path: "category" } })
+      .populate({ path: "objectToExchange", populate: { path: "state" } })
+      .populate({ path: "objectToExchange", populate: { path: "association" } })
+      .populate({ path: "objectToExchange", populate: { path: "category" } })
       .populate("swap_receiver", ["-password"])
       .populate("swap_state")
       .exec((err, data) => {
@@ -196,8 +196,13 @@ exports.getUserSwapReceived = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.swap
       .find({ swap_receiver: req.user._id })
-      .populate("objectWanted")
-      .populate("objectToExchange")
+      .populate({ path: "objectWanted", populate: { path: "state" } })
+      .populate({ path: "objectWanted", populate: { path: "association" } })
+      .populate({ path: "objectWanted", populate: { path: "category" } })
+      .populate({ path: "objectToExchange", populate: { path: "state" } })
+      .populate({ path: "objectToExchange", populate: { path: "association" } })
+      .populate({ path: "objectToExchange", populate: { path: "category" } })
+
       .populate("swap_sender", ["-password"])
       .populate("swap_state")
       .exec((err, data) => {
