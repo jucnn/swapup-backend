@@ -47,15 +47,22 @@ exports.register = (req, res) => {
         // Register user
         Models.user
           .create(req.body)
-          .then((data) =>
-            sendApiSuccessResponse(
+          .then((data) => {
+            // Generate user JWT
+            const userJwt = data.generateJwt(data);
+            // Set response cookie
+            res.cookie(process.env.COOKIE_NAME, userJwt, {
+              maxAge: 7000000,
+              httpOnly: false,
+            });
+            return sendApiSuccessResponse(
               "/auth/register",
               "POST",
               res,
               "Request succeed : User created",
               data
-            )
-          )
+            );
+          })
           .catch((err) =>
             sendApiErrorResponse(
               "/auth/register",
@@ -219,7 +226,7 @@ exports.getUserObjects = (req, res) => {
         }
       });
   });
-}
+};
 
 exports.getAllUsers = (req, res) => {
   return new Promise((resolve, reject) => {
