@@ -2,6 +2,7 @@
 Imports
 */
 const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require("../models/user.model");
 //
 
@@ -9,19 +10,19 @@ const UserModel = require("../models/user.model");
 Methods
 */
 // Extract token from cookie
-const cookieExtractor = (req, res) => {
+/* const cookieExtractor = (req, res) => {
   let token = null;
   if (req && req.cookies) {
     token = req.cookies[process.env.COOKIE_NAME];
   }
   return token;
 };
-
+ */
 // JWT authentication
 const authJwt = (passport) => {
   // JWT options for passport
   const opts = {
-    jwtFromRequest: cookieExtractor,
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
     secretOrKey: process.env.JWT_SECRET,
   };
 
