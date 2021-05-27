@@ -29,6 +29,7 @@ exports.getAll = (req, res) => {
 };
 
 exports.getAllBySearching = (req, res) => {
+  console.log(req);
   let { title, description, category, price, state, brand } = req.body;
   queryCond = {
     ...(category && { category }),
@@ -105,6 +106,12 @@ exports.deleteOne = (req, res) => {
   return new Promise((resolve, reject) => {
     Models.object
       .findByIdAndDelete({ _id: req })
+      .then((data) => resolve(data))
+      .catch((err) => reject(err));
+    Models.swap
+      .deleteMany({
+        $or: [{ objectWanted: req }, { objectToExchange: req }],
+      })
       .then((data) => resolve(data))
       .catch((err) => reject(err));
   });
