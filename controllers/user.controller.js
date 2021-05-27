@@ -47,18 +47,15 @@ exports.register = (req, res) => {
           .create(req.body)
           .then((data) => {
             // Generate user JWT
-            const userJwt = data.generateJwt(data);
+            const token = data.generateJwt(data);
             // Set response cookie
-            res.cookie(process.env.COOKIE_NAME, userJwt, {
-              maxAge: 7000000,
-              httpOnly: false,
-            });
+           
             return sendApiSuccessResponse(
               "/auth/register",
               "POST",
               res,
               "Request succeed : User created",
-              data
+              token
             );
           })
           .catch((err) =>
@@ -127,12 +124,9 @@ exports.login = (req, res) => {
             );
           } else {
             // Generate user JWT
-            const userJwt = data.generateJwt(data);
+            const token = data.generateJwt(data);
             // Set response cookie
-            res.cookie(process.env.COOKIE_NAME, userJwt, {
-              maxAge: 7000000,
-              httpOnly: false,
-            });
+         
 
             // Send user data
             return sendApiSuccessResponse(
@@ -140,7 +134,7 @@ exports.login = (req, res) => {
               "POST",
               res,
               "User login",
-              data
+              token
             );
           }
         }
