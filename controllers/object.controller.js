@@ -29,7 +29,6 @@ exports.getAll = (req, res) => {
 };
 
 exports.getAllBySearching = (req, res) => {
-  console.log(req);
   let { title, description, category, price, state, brand } = req.body;
   queryCond = {
     ...(category && { category }),
@@ -39,7 +38,6 @@ exports.getAllBySearching = (req, res) => {
     ...(title && { title }),
     ...(description && { description }),
   };
-  console.log(queryCond);
   return new Promise((resolve, reject) => {
     Models.object
       .find(queryCond)

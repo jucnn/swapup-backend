@@ -125,7 +125,6 @@ class ApiRouter {
     });
 
     this.router.get("/:endpoint", (req, res) => {
-      console.log(req.user);
       // Use the controller to create nex object
       Controllers[req.params.endpoint]
         .getAll(req)
