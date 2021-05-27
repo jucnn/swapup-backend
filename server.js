@@ -9,6 +9,8 @@ Imports
     const cookieParser = require('cookie-parser'); //=> https://www.npmjs.com/package/cookie-parser
     const passport = require('passport'); //=> https://www.npmjs.com/package/passport
     const path = require('path'); //=> https://www.npmjs.com/package/path
+    const cors = require('cors')
+
 
     // Services
     const MONGOclass = require('./services/mongo.class');
@@ -36,6 +38,9 @@ class ServerClass{
             // Enable access to specific origins
             next();
         });
+
+        this.server.use(cors())
+        this.server.options('*', cors())
 
         // Set server view engine
         this.server.set( 'view engine', 'ejs' );
