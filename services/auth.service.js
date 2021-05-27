@@ -22,7 +22,7 @@ Methods
 const authJwt = (passport) => {
   // JWT options for passport
   const opts = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET,
   };
 
